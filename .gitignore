@@ -1,0 +1,39 @@
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Flask / environment
+.env
+instance/
+.webassets-cache
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+
+# Jupyter Notebook checkpoints (if used)
+.ipynb_checkpoints/
+
+# Model checkpoints (optional if large)
+*.h5
+*.pt
+
+# System files
+desktop.ini

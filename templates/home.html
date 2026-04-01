@@ -1,0 +1,88 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="wrap">
+  <div class="left">
+    <div class="eyebrow">
+      <div class="eyebrow-dot"></div>
+      <span class="eyebrow-txt">Machine Learning · Decision Tree</span>
+    </div>
+    <h1>Predict Air<br><span class="accent">Quality Index</span></h1>
+    <p class="subtitle">Enter real-time weather parameters to get an instant PM 2.5 concentration prediction from our trained regression model.</p>
+
+    <div class="sec-label">
+      <span>Parameters</span>
+      <div class="sec-line"></div>
+      <span>8 inputs</span>
+    </div>
+
+    <form action="{{ url_for('predict') }}" method="POST">
+      <div class="grid">
+        <div class="field">
+          <div class="field-top"><span class="field-key">T</span><span class="field-unit">°C</span></div>
+          <div class="field-label">Avg Temperature</div>
+          <input type="number" name="T" step="0.01" placeholder="e.g. 14.3" required>
+        </div>
+        <div class="field">
+          <div class="field-top"><span class="field-key">TM</span><span class="field-unit">°C</span></div>
+          <div class="field-label">Max Temperature</div>
+          <input type="number" name="TM" step="0.01" placeholder="e.g. 21.1" required>
+        </div>
+        <div class="field">
+          <div class="field-top"><span class="field-key">Tm</span><span class="field-unit">°C</span></div>
+          <div class="field-label">Min Temperature</div>
+          <input type="number" name="Tm" step="0.01" placeholder="e.g. 10.8" required>
+        </div>
+        <div class="field">
+          <div class="field-top"><span class="field-key">SLP</span><span class="field-unit">hPa</span></div>
+          <div class="field-label">Sea Level Pressure</div>
+          <input type="number" name="SLP" step="0.01" placeholder="e.g. 1019.8" required>
+        </div>
+        <div class="field">
+          <div class="field-top"><span class="field-key">H</span><span class="field-unit">%</span></div>
+          <div class="field-label">Humidity</div>
+          <input type="number" name="H" step="0.01" placeholder="e.g. 83.0" required>
+        </div>
+        <div class="field">
+          <div class="field-top"><span class="field-key">VV</span><span class="field-unit">km</span></div>
+          <div class="field-label">Visibility</div>
+          <input type="number" name="VV" step="0.01" placeholder="e.g. 0.8" required>
+        </div>
+        <div class="field">
+          <div class="field-top"><span class="field-key">V</span><span class="field-unit">km/h</span></div>
+          <div class="field-label">Wind Speed</div>
+          <input type="number" name="V" step="0.01" placeholder="e.g. 2.6" required>
+        </div>
+        <div class="field">
+          <div class="field-top"><span class="field-key">VM</span><span class="field-unit">km/h</span></div>
+          <div class="field-label">Max Wind Speed</div>
+          <input type="number" name="VM" step="0.01" placeholder="e.g. 7.6" required>
+        </div>
+      </div>
+      <div class="actions">
+        <button type="submit" class="btn-main">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Run Prediction
+        </button>
+        <button type="reset" class="btn-sec">Reset</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="right">
+    <div class="right-title">AQI Scale Reference</div>
+    <div class="scale-card">
+      <div class="scale-heading">PM 2.5 CONCENTRATION LEVELS</div>
+      <div class="scale-item"><div class="scale-color" style="background:#22c55e"></div><span class="scale-name">Good</span><span class="scale-range">0–12 µg/m³</span></div>
+      <div class="scale-item"><div class="scale-color" style="background:#eab308"></div><span class="scale-name">Moderate</span><span class="scale-range">12–35 µg/m³</span></div>
+      <div class="scale-item"><div class="scale-color" style="background:#f97316"></div><span class="scale-name">Sensitive groups</span><span class="scale-range">35–55 µg/m³</span></div>
+      <div class="scale-item"><div class="scale-color" style="background:#ef4444"></div><span class="scale-name">Unhealthy</span><span class="scale-range">55–150 µg/m³</span></div>
+      <div class="scale-item"><div class="scale-color" style="background:#a855f7"></div><span class="scale-name">Very unhealthy</span><span class="scale-range">150–250 µg/m³</span></div>
+      <div class="scale-item"><div class="scale-color" style="background:#7f1d1d"></div><span class="scale-name">Hazardous</span><span class="scale-range">250+ µg/m³</span></div>
+    </div>
+    <div class="info-card">
+      <div class="scale-heading">HOW IT WORKS</div>
+      <p class="info-text">This model uses a Decision Tree Regressor trained on historical weather &amp; pollution data. Input your local weather readings to get a PM 2.5 estimate.</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

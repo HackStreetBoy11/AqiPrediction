@@ -1,0 +1,118 @@
+{% extends 'layout.html' %}
+{% block content %}
+{% for item in prediction %}
+{% set val = item | float %}
+{% if val < 12 %}
+  {% set level = "Good" %}
+  {% set desc = "Air quality is satisfactory. Little to no risk from pollution." %}
+  {% set advice = "Great day to go outside. Enjoy outdoor activities freely." %}
+  {% set lvl_color = "#22c55e" %}
+  {% set lvl_bg = "rgba(34,197,94,0.06)" %}
+  {% set lvl_border = "rgba(34,197,94,0.2)" %}
+  {% set lvl_text = "#86efac" %}
+{% elif val < 35 %}
+  {% set level = "Moderate" %}
+  {% set desc = "Acceptable air quality, but sensitive individuals may be affected." %}
+  {% set advice = "Consider reducing prolonged outdoor exertion if you are sensitive." %}
+  {% set lvl_color = "#eab308" %}
+  {% set lvl_bg = "rgba(234,179,8,0.06)" %}
+  {% set lvl_border = "rgba(234,179,8,0.2)" %}
+  {% set lvl_text = "#fde047" %}
+{% elif val < 55 %}
+  {% set level = "Unhealthy for Sensitive Groups" %}
+  {% set desc = "Members of sensitive groups may experience health effects." %}
+  {% set advice = "Sensitive individuals should limit outdoor activities." %}
+  {% set lvl_color = "#f97316" %}
+  {% set lvl_bg = "rgba(249,115,22,0.06)" %}
+  {% set lvl_border = "rgba(249,115,22,0.2)" %}
+  {% set lvl_text = "#fdba74" %}
+{% elif val < 150 %}
+  {% set level = "Unhealthy" %}
+  {% set desc = "Everyone may begin to experience health effects." %}
+  {% set advice = "Reduce outdoor activities. Wear a mask if going outside." %}
+  {% set lvl_color = "#ef4444" %}
+  {% set lvl_bg = "rgba(239,68,68,0.06)" %}
+  {% set lvl_border = "rgba(239,68,68,0.2)" %}
+  {% set lvl_text = "#fca5a5" %}
+{% elif val < 250 %}
+  {% set level = "Very Unhealthy" %}
+  {% set desc = "Health alert — everyone may experience serious health effects." %}
+  {% set advice = "Avoid all outdoor activities. Use air purifiers indoors." %}
+  {% set lvl_color = "#a855f7" %}
+  {% set lvl_bg = "rgba(168,85,247,0.06)" %}
+  {% set lvl_border = "rgba(168,85,247,0.2)" %}
+  {% set lvl_text = "#d8b4fe" %}
+{% else %}
+  {% set level = "Hazardous" %}
+  {% set desc = "Health emergency. Everyone is at serious risk." %}
+  {% set advice = "Stay indoors. Seal windows. Avoid all outdoor exposure." %}
+  {% set lvl_color = "#ef4444" %}
+  {% set lvl_bg = "rgba(127,29,29,0.15)" %}
+  {% set lvl_border = "rgba(239,68,68,0.3)" %}
+  {% set lvl_text = "#f87171" %}
+{% endif %}
+
+<div class="wrap">
+  <div class="left">
+    <div class="eyebrow">
+      <div class="eyebrow-dot" style="background:{{ lvl_color }}"></div>
+      <span class="eyebrow-txt">Prediction · Complete</span>
+    </div>
+    <h1>Your AQI<br><span class="accent">Result</span></h1>
+    <p class="subtitle">Based on the 8 weather parameters you entered, here is the predicted PM 2.5 concentration.</p>
+
+    <div class="sec-label">
+      <span>Output</span>
+      <div class="sec-line"></div>
+    </div>
+
+    <div class="result-big" style="border-color:{{ lvl_border }};margin-bottom:16px">
+      <div class="result-eyebrow">PM 2.5 CONCENTRATION</div>
+      <div class="result-num" style="color:{{ lvl_color }}">{{ "%.2f"|format(val) }}</div>
+      <div class="result-unit">µg/m³ &nbsp;·&nbsp; predicted value</div>
+      <div class="result-badge" style="background:{{ lvl_bg }};border-color:{{ lvl_border }};color:{{ lvl_text }}">
+        <div class="badge-dot" style="background:{{ lvl_color }}"></div>
+        {{ level }}
+      </div>
+    </div>
+
+    <div class="alert-box" style="background:{{ lvl_bg }};border-color:{{ lvl_border }}">
+      <div class="alert-title" style="color:{{ lvl_text }}">{{ desc }}</div>
+      <div class="alert-body" style="color:{{ lvl_text }};opacity:0.8">{{ advice }}</div>
+    </div>
+
+    <div class="actions" style="margin-top:28px">
+      <a href="{{ url_for('home') }}" class="btn-main">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Make Another Prediction
+      </a>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="right-title">Reading Breakdown</div>
+    <div class="meter-wrap">
+      <div class="scale-heading">POLLUTION METER</div>
+      <div class="meter-track">
+        <div class="meter-fill" style="width:{{ [val/5, 100]|min }}%"></div>
+      </div>
+      <div class="meter-ticks">
+        <span class="meter-tick">0</span>
+        <span class="meter-tick">125</span>
+        <span class="meter-tick">250</span>
+        <span class="meter-tick">500+</span>
+      </div>
+    </div>
+    <div class="scale-card">
+      <div class="scale-heading">CLASSIFICATION SCALE</div>
+      <div class="scale-item {% if val < 12 %}active{% endif %}"><div class="scale-color" style="background:#22c55e"></div><span class="scale-name">Good</span><span class="scale-range">0–12</span></div>
+      <div class="scale-item {% if val >= 12 and val < 35 %}active{% endif %}"><div class="scale-color" style="background:#eab308"></div><span class="scale-name">Moderate</span><span class="scale-range">12–35</span></div>
+      <div class="scale-item {% if val >= 35 and val < 55 %}active{% endif %}"><div class="scale-color" style="background:#f97316"></div><span class="scale-name">Sensitive groups</span><span class="scale-range">35–55</span></div>
+      <div class="scale-item {% if val >= 55 and val < 150 %}active{% endif %}"><div class="scale-color" style="background:#ef4444"></div><span class="scale-name">Unhealthy</span><span class="scale-range">55–150</span></div>
+      <div class="scale-item {% if val >= 150 and val < 250 %}active{% endif %}"><div class="scale-color" style="background:#a855f7"></div><span class="scale-name">Very unhealthy</span><span class="scale-range">150–250</span></div>
+      <div class="scale-item {% if val >= 250 %}active{% endif %}"><div class="scale-color" style="background:#7f1d1d"></div><span class="scale-name">Hazardous</span><span class="scale-range">250+</span></div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+{% endblock %}
