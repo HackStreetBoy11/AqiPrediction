@@ -200,10 +200,10 @@ pip
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/yourusername/AQI-Prediction-System-using-ML.git
+git clone https://github.com/HackStreetBoy11/AqiPrediction.git
 
 # 2. Navigate into the project directory
-cd AQI-Prediction-System-using-ML
+cd AqiPrediction
 
 # 3. Install required dependencies
 pip install -r requirements.txt
@@ -280,7 +280,7 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 
 ## 👤 Author
 
-Made with ❤️ by **[Your Name](https://github.com/yourusername)**
+Made with ❤️ by **[varun sammal](https://github.com/HackStreetBoy11)**
 
 [![GitHub](https://img.shields.io/badge/GitHub-Follow-black?style=flat&logo=github)](https://github.com/yourusername)
 
