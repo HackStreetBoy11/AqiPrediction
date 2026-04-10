@@ -2,15 +2,15 @@
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Online-brightgreen?style=for-the-badge&logo=render)](https://aqiprediction-q6vq.onrender.com)
 [![Python](https://img.shields.io/badge/Python-3.8+-blue?style=for-the-badge&logo=python)](https://www.python.org/)
-[![Algorithm](https://img.shields.io/badge/Algorithm-Decision%20Tree%20Regression-orange?style=for-the-badge&logo=scikit-learn)](https://scikit-learn.org/)
-[![Accuracy](https://img.shields.io/badge/Accuracy-90%25+-success?style=for-the-badge)](https://aqiprediction-q6vq.onrender.com)
-[![Dataset](https://img.shields.io/badge/Dataset-2000%2B%20Records-informational?style=for-the-badge)](https://aqiprediction-q6vq.onrender.com)
+[![Algorithm](https://img.shields.io/badge/Algorithm-XGBoost%20Regression-orange?style=for-the-badge&logo=scikit-learn)](https://xgboost.readthedocs.io/)
+[![Accuracy](https://img.shields.io/badge/R²%20Score-71%25+-success?style=for-the-badge)](https://aqiprediction-q6vq.onrender.com)
+[![Dataset](https://img.shields.io/badge/Dataset-20000%2B%20Records-informational?style=for-the-badge)](https://aqiprediction-q6vq.onrender.com)
 
 ---
 
 ## 📌 Overview
 
-The **AQI (Air Quality Index) Prediction System** is a machine learning-powered web application that predicts air quality levels based on key meteorological and environmental parameters. With a dataset of **2000+ records** and a model accuracy of **90%+**, this system provides reliable AQI forecasts to help users make informed decisions about outdoor activities and health safety.
+The **AQI (Air Quality Index) Prediction System** is a machine learning-powered web application that predicts air quality levels based on key environmental parameters. Built on the **Air Quality India 2015–2020** dataset from Kaggle with **20,000+ records** and a model R² score of **71%+**, this system provides reliable AQI forecasts to help users make informed decisions about outdoor activities and health safety.
 
 🔗 **Live Demo:** [https://aqiprediction-q6vq.onrender.com](https://aqiprediction-q6vq.onrender.com)
 
@@ -18,11 +18,11 @@ The **AQI (Air Quality Index) Prediction System** is a machine learning-powered 
 
 ## ✨ Features
 
-- 🔮 Real-time AQI prediction using trained ML model
-- 📊 Input-based prediction with 8 meteorological features
+- 🔮 Real-time AQI prediction using trained XGBoost ML model
+- 📊 Input-based prediction with 10 environmental features
 - 🌐 Deployed web interface — accessible from any device
 - ⚡ Fast, lightweight, and easy to use
-- 📈 90%+ model accuracy on test data
+- 📈 71%+ R² Score on test data
 
 ---
 
@@ -30,81 +30,94 @@ The **AQI (Air Quality Index) Prediction System** is a machine learning-powered 
 
 | Property | Details |
 |---|---|
-| **Total Records** | 2000+ |
+| **Source** | [Air Quality India 2015–2020 — Kaggle](https://www.kaggle.com/) |
+| **Total Records** | 20,000+ |
+| **Time Period** | 2015 – 2020 |
 | **Target Variable** | AQI (Air Quality Index) |
-| **Features** | 8 meteorological parameters |
+| **Features** | 10 environmental parameters |
 | **Data Type** | Numerical / Continuous |
 
 ---
 
 ## 🧪 Input Features
 
-The model uses the following **8 meteorological features** for prediction:
+The model uses the following **10 environmental features** for prediction:
 
-| Feature | Symbol | Description |
+| # | Feature | Description |
 |---|---|---|
-| Average Temperature | **T°C** | Mean daily temperature in Celsius |
-| Max Temperature | **TM°C** | Maximum recorded temperature in Celsius |
-| Min Temperature | **Tm°C** | Minimum recorded temperature in Celsius |
-| Sea Level Pressure | **SLP hPa** | Atmospheric pressure at sea level in hectopascals |
-| Humidity | **H%** | Relative humidity percentage |
-| Visibility | **VV km** | Atmospheric visibility in kilometers |
-| Wind Speed | **V km/h** | Average wind speed in km/h |
-| Max Wind Speed | **VM km/h** | Maximum wind speed recorded in km/h |
+| 1 | **PM2.5** | Fine particulate matter (µg/m³) |
+| 2 | **PM10** | Coarse particulate matter (µg/m³) |
+| 3 | **NO** | Nitric oxide concentration (µg/m³) |
+| 4 | **NO2** | Nitrogen dioxide concentration (µg/m³) |
+| 5 | **NOx** | Total nitrogen oxides (ppb) |
+| 6 | **NH3** | Ammonia concentration (µg/m³) |
+| 7 | **CO** | Carbon monoxide concentration (mg/m³) |
+| 8 | **SO2** | Sulfur dioxide concentration (µg/m³) |
+| 9 | **O3** | Ozone concentration (µg/m³) |
+| 10 | **Benzene** | Benzene concentration (µg/m³) |
+
+> ⚠️ *Update the feature list above if your actual 10 features differ from these.*
 
 ---
 
 ## 🤖 Machine Learning
 
-### Algorithm — Decision Tree Regression
+### Algorithm — XGBoost Regression
 
-This project uses **Decision Tree Regression** as the core machine learning algorithm for predicting AQI values.
+This project uses **XGBoost Regressor (Extreme Gradient Boosting)** as the core machine learning algorithm for predicting AQI values.
 
-> A Decision Tree Regressor works by recursively splitting the dataset into subsets based on the most significant feature at each node, ultimately predicting a continuous AQI value at each leaf node.
+> XGBoost builds an ensemble of decision trees sequentially, where each new tree corrects the residual errors of the previous ones. The final AQI prediction is the weighted sum of all individual tree outputs, optimized using gradient descent.
 
-#### Why Decision Tree Regression?
+#### Why XGBoost Regression?
 
 | Reason | Explanation |
 |---|---|
-| 🔍 **Interpretability** | Easily visualized and understood — ideal for understanding which weather factors drive AQI |
-| ⚙️ **No Feature Scaling Required** | Works directly with raw numerical inputs without normalization |
-| 🌿 **Non-linear Relationships** | Captures complex, non-linear relationships between weather parameters and AQI |
-| 🚀 **Fast Inference** | Predictions are made in O(log n) time, making it suitable for real-time web apps |
-| 📊 **Handles Mixed Data** | Works well with all 8 heterogeneous meteorological features |
+| 🚀 **High Performance** | Outperforms most traditional ML algorithms on tabular data |
+| 🌿 **Handles Non-linearity** | Captures complex, non-linear relationships between pollutants and AQI |
+| 🛡️ **Built-in Regularization** | L1 & L2 regularization prevents overfitting |
+| ⚙️ **Feature Importance** | Automatically ranks which pollutants contribute most to AQI |
+| 🔁 **Gradient Boosting** | Iteratively reduces prediction error using second-order gradients |
+| ⚡ **Fast & Scalable** | Parallel tree construction handles 20,000+ records efficiently |
 
-#### How the Tree Works
+#### How XGBoost Works
 
 ```
-                        [Root Node]
-                    Is Humidity > 70%?
-                   /                  \
-               YES                     NO
-              /                          \
-   Is Wind Speed < 10?            Is Visibility > 8km?
-      /        \                      /           \
-  AQI: 45    AQI: 85            AQI: 120        AQI: 55
-  (Good)    (Moderate)     (Unhealthy-Sensitive)  (Moderate)
+Initial Prediction (mean AQI)
+        ↓
+   Tree 1 → Learns residual errors
+        ↓
+   New Prediction = Base + (learning_rate × Tree1_output)
+        ↓
+   Tree 2 → Learns remaining errors
+        ↓
+   New Prediction = Previous + (learning_rate × Tree2_output)
+        ↓
+        ... (repeated for n_estimators trees)
+        ↓
+Final AQI = Sum of all weighted tree outputs
 ```
-
-Each internal node splits on a meteorological feature, and each leaf node outputs a predicted AQI value.
 
 #### Key Hyperparameters
 
 ```python
-from sklearn.tree import DecisionTreeRegressor
+from xgboost import XGBRegressor
 
-model = DecisionTreeRegressor(
-    max_depth=10,           # Controls tree depth to prevent overfitting
-    min_samples_split=5,    # Minimum samples required to split a node
-    min_samples_leaf=3,     # Minimum samples required at a leaf node
-    random_state=42         # For reproducibility
+model = XGBRegressor(
+    n_estimators=200,        # Number of boosting trees
+    learning_rate=0.1,       # Step size for each tree update
+    max_depth=6,             # Maximum depth of each tree
+    subsample=0.8,           # Fraction of data used per tree
+    colsample_bytree=0.8,    # Fraction of features used per tree
+    reg_alpha=0.1,           # L1 regularization
+    reg_lambda=1.0,          # L2 regularization
+    random_state=42          # For reproducibility
 )
 ```
 
 #### Training Code Snippet
 
 ```python
-from sklearn.tree import DecisionTreeRegressor
+from xgboost import XGBRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score, mean_absolute_error
 import pandas as pd
@@ -113,7 +126,7 @@ import pandas as pd
 df = pd.read_csv('dataset/aqi_data.csv')
 
 # Define features and target
-features = ['T', 'TM', 'Tm', 'SLP', 'H', 'VV', 'V', 'VM']
+features = ['PM2.5', 'PM10', 'NO', 'NO2', 'NOx', 'NH3', 'CO', 'SO2', 'O3', 'Benzene']
 X = df[features]
 y = df['AQI']
 
@@ -122,8 +135,8 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
 
-# Train Decision Tree Regressor
-model = DecisionTreeRegressor(max_depth=10, random_state=42)
+# Train XGBoost Regressor
+model = XGBRegressor(n_estimators=200, learning_rate=0.1, max_depth=6, random_state=42)
 model.fit(X_train, y_train)
 
 # Evaluate
@@ -135,17 +148,17 @@ print(f"MAE       : {mean_absolute_error(y_test, y_pred):.2f}")
 ### Model Pipeline
 
 ```
-Raw Input Features (T, TM, Tm, SLP, H, VV, V, VM)
+Raw Input Features (10 Environmental Parameters)
                         ↓
-         Data Preprocessing & Cleaning
+         Data Preprocessing & Missing Value Handling
                         ↓
            Train / Test Split (80 / 20)
                         ↓
-     Decision Tree Regressor — Model Training
+        XGBoost Regressor — Gradient Boosted Trees
                         ↓
         Evaluation (R² Score, MAE, RMSE)
                         ↓
-       Serialize Model → aqi_model.pkl (joblib)
+       Serialize Model → api_predictor.pkl (pickle)
                         ↓
          AQI Prediction & Category Output
 ```
@@ -154,10 +167,11 @@ Raw Input Features (T, TM, Tm, SLP, H, VV, V, VM)
 
 | Metric | Value |
 |---|---|
-| **Accuracy / R² Score** | 90%+ |
-| **Algorithm** | Decision Tree Regression |
-| **Training Data** | 80% of 2000+ records (~1600 samples) |
-| **Test Data** | 20% of 2000+ records (~400 samples) |
+| **R² Score** | 71%+ |
+| **Algorithm** | XGBoost Regression |
+| **Dataset** | Air Quality India 2015–2020 (Kaggle) |
+| **Training Data** | 80% of 20,000+ records (~16,000 samples) |
+| **Test Data** | 20% of 20,000+ records (~4,000 samples) |
 | **Splitting Criterion** | Mean Squared Error (MSE) |
 
 ### AQI Categories
@@ -178,10 +192,10 @@ Raw Input Features (T, TM, Tm, SLP, H, VV, V, VM)
 | Layer | Technology |
 |---|---|
 | **Language** | Python 3.8+ |
-| **ML Algorithm** | Decision Tree Regression (Scikit-Learn) |
+| **ML Algorithm** | XGBoost Regression |
 | **Data Processing** | Pandas, NumPy |
-| **Model Serialization** | Joblib |
-| **Web Framework** | Flask / Streamlit |
+| **Model Serialization** | Pickle |
+| **Web Framework** | Flask |
 | **Visualization** | Matplotlib, Seaborn |
 | **Deployment** | Render |
 
@@ -224,10 +238,10 @@ Open your browser and go to: `http://localhost:5000`
 AQI-Prediction-System-using-ML/
 │
 ├── dataset/
-│   └── aqi_data.csv            # Dataset with 2000+ records
+│   └── aqi_data.csv            # Air Quality India 2015–2020 dataset
 │
-├── model/
-│   └── aqi_model.pkl           # Trained ML model
+├── Model/
+│   └── api_predictor.pkl       # Trained XGBoost model (pickle)
 │
 ├── static/
 │   └── css/                    # Stylesheets
@@ -245,9 +259,9 @@ AQI-Prediction-System-using-ML/
 
 ## 📊 How It Works
 
-1. **User inputs** the 8 meteorological parameters into the web form.
-2. The inputs are **preprocessed and scaled** using the same pipeline used during training.
-3. The trained **ML model predicts the AQI value**.
+1. **User inputs** the 10 environmental/pollutant parameters into the web form.
+2. The inputs are **preprocessed** using the same pipeline used during training.
+3. The trained **XGBoost model predicts the AQI value**.
 4. The app displays the **AQI score** along with the corresponding **health category**.
 
 ---
@@ -280,9 +294,9 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 
 ## 👤 Author
 
-Made with ❤️ by **[varun sammal](https://github.com/HackStreetBoy11)**
+Made with ❤️ by **[Varun Sammal](https://github.com/HackStreetBoy11)**
 
-[![GitHub](https://img.shields.io/badge/GitHub-Follow-black?style=flat&logo=github)](https://github.com/yourusername)
+[![GitHub](https://img.shields.io/badge/GitHub-Follow-black?style=flat&logo=github)](https://github.com/HackStreetBoy11)
 
 ---
 
