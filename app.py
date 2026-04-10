@@ -1,32 +1,46 @@
-from flask import Flask
-from flask import request,render_template,url_for
+from flask import Flask, request, render_template
 import pickle
+import numpy as np
 
-app=Flask(__name__)
+app = Flask(__name__)
 
-model = pickle.load(open('tree_gridcv.pkl', 'rb'))
+# Load model
+model = pickle.load(open('./Model/api_predictor.pkl', 'rb'))
 
 @app.route('/')
 def home():
-	return render_template('home.html')
+    return render_template('home.html')
 
-@app.route('/predict',methods=['POST'])
+@app.route('/predict', methods=['POST'])
 def predict():
-	AQI_predict = None
-	if request.method == 'POST':
-		# field1 = request.form['field1']
-		AQI_predict = model.predict([[
-    float(request.form["T"]),
-    float(request.form["TM"]),
-    float(request.form["Tm"]),
-    float(request.form["SLP"]),
-    float(request.form["H"]),
-    float(request.form["VV"]),
-    float(request.form["V"]),
-    float(request.form["VM"])
-]])    
-	
-	return render_template('result.html', prediction=AQI_predict)
+    prediction = None
 
-if __name__=='__main__':
-	app.run()
+    if request.method == 'POST':
+        try:
+            # Get input values from form
+            features = [
+                float(request.form["PM10"]),
+                float(request.form["NO"]),
+                float(request.form["NO2"]),
+                float(request.form["NOx"]),
+                float(request.form["NH3"]),
+                float(request.form["CO"]),
+                float(request.form["SO2"]),
+                float(request.form["O3"]),
+                float(request.form["Benzene"]),
+                float(request.form["Toluene"])
+            ]
+
+            # Convert to numpy array
+            final_features = np.array([features])
+
+            # Prediction
+            prediction = model.predict(final_features)[0]
+
+        except Exception as e:
+            prediction = f"Error: {str(e)}"
+
+    return render_template('result.html', prediction=prediction)
+
+if __name__ == '__main__':
+    app.run(debug=True)

@@ -1,7 +1,6 @@
 {% extends 'layout.html' %}
 {% block content %}
-{% for item in prediction %}
-{% set val = item | float %}
+{% set val = prediction | float %}
 {% if val < 12 %}
   {% set level = "Good" %}
   {% set desc = "Air quality is satisfactory. Little to no risk from pollution." %}
@@ -59,7 +58,7 @@
       <span class="eyebrow-txt">Prediction · Complete</span>
     </div>
     <h1>Your AQI<br><span class="accent">Result</span></h1>
-    <p class="subtitle">Based on the 8 weather parameters you entered, here is the predicted PM 2.5 concentration.</p>
+    <p class="subtitle">Based on the 10 air quality parameters you entered, here is the predicted PM 2.5 concentration.</p>
 
     <div class="sec-label">
       <span>Output</span>
@@ -114,5 +113,5 @@
     </div>
   </div>
 </div>
-{% endfor %}
+
 {% endblock %}
